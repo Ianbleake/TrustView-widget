@@ -3,7 +3,10 @@ import App from '../ui/App'
 
 type WidgetConfig = {
   storeId: string
+  mode?: 'rating' | 'reviews'
+  target?: string
 }
+
 
 export class WidgetRuntime {
   private config: WidgetConfig
@@ -39,7 +42,7 @@ export class WidgetRuntime {
       <App
         storeId={data.storeId}
         reviews={data.reviews}
-        config={data.remoteConfig}
+        mode={data.remoteConfig.mode}
       />,
       this.appRoot
     )

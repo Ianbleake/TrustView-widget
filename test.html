@@ -6,8 +6,70 @@
     <title>Test Page</title>
 </head>
 <body>
-    <h1>This is a Test Page</h1>
-    <p>Hello, this is a simple HTML page for testing purposes.</p>
-    <script src="./dist/widget.js" data-store="demo123"></script>
+
+    <div class="main-product-container" >
+
+        <div class="image-container" >
+            <img src="https://dcdn-us.mitiendanube.com/stores/006/923/32…o-a93da6c806a40d648f17658220747524-1024-1024.webp" alt="Product Image">
+        </div>
+
+        <div class="product-info" >
+            <h1 class="product-name">Producto de testeo</h1>
+            <p class="product-price">$5245</p>
+        </div>
+
+    </div>
+
+    <script
+    src="./dist/widget.js"
+    data-store="demo123"
+    data-mode="rating"
+    data-target=".product-price">
+  </script>
+  
+  <script
+    src="./dist/widget.js"
+    data-store="demo123"
+    data-mode="reviews"
+    data-target=".main-product-container">
+  </script>
+  
+
+
 </body>
 </html>
+
+
+<style>
+    .main-product-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 600px;
+        gap: 5rem;
+    }
+    
+    .image-container {
+        width: 50%;
+        background: aliceblue;
+        height: 80%;
+    }
+    
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        height: 80%;
+    }
+
+    p.product-price {
+        font-size: 25px;
+        margin: 0;
+    }
+
+    h1.product-name {
+        margin: 15px 0px;
+    }
+</style>

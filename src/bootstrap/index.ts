@@ -1,23 +1,30 @@
 import { mountWidget } from './mount'
 
-function init() {
+type Modes = 'rating' | 'reviews'
 
+function init() {
   console.log('🔥 TrustView bundle loaded')
 
   const scripts = document.querySelectorAll<HTMLScriptElement>(
     'script[src*="widget.js"]'
   )
 
-  const script = scripts[scripts.length - 1]
-  if (!script) return
+  scripts.forEach((script) => {
+    const storeId = script.dataset.store
+    const mode = script.dataset.mode as Modes
+    const target = script.dataset.target
 
-  const storeId = script.dataset.store
-  if (!storeId) {
-    console.warn('[TrustView] Missing data-store attribute')
-    return
-  }
+    if (!storeId) {
+      console.warn('[TrustView] Missing data-store attribute')
+      return
+    }
 
-  mountWidget({ storeId })
+    mountWidget({
+      storeId,
+      mode,
+      target
+    })
+  })
 }
 
 if (document.readyState === 'loading') {

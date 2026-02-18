@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [tailwindcss(),react()],
   build: {
     lib: {
       entry: 'src/bootstrap/index.ts',
@@ -15,5 +16,9 @@ export default defineConfig({
         inlineDynamicImports: true
       }
     }
+  },
+  css: {
+    postcss: './postcss.config.js'
   }
+  
 })

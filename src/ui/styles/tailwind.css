@@ -1,9 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :host {
   --tv-primary: #111827;
   --tv-radius: 8px;
   font-family: system-ui, -apple-system, sans-serif;
+}
+
+.testTitle{
+  color: red;
 }

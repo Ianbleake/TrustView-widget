@@ -1,27 +1,25 @@
-export type AppProps = {
+import { RatingLayout } from './layouts/RatingLayout'
+import { ReviewsLayout } from './layouts/ReviewsLayout'
+
+type AppProps = {
   storeId: string
   reviews: any[]
-  config: Record<string, any>
+  mode?: 'rating' | 'reviews'
 }
 
 export default function App({
   storeId,
   reviews,
-  config,
+  mode,
 }: AppProps) {
-  return (
-    <div className="p-4 border rounded-widget">
-      <h2 className="text-lg font-semibold text-primary">
-        TrustView Widget
-      </h2>
 
-      <p className="text-sm mt-2">
-        Store: {storeId}
-      </p>
+  if (mode === 'rating') {
+    return <RatingLayout storeId={storeId} reviews={reviews} />
+  }
 
-      <p className="text-sm mt-2">
-        Reviews: {reviews.length}
-      </p>
-    </div>
-  )
+  if (mode === 'reviews') {
+    return <ReviewsLayout storeId={storeId} reviews={reviews} />
+  }
+
+  return null
 }
