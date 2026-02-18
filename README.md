@@ -1,1 +1,0 @@
-# TrustView-widget

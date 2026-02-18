@@ -1,18 +1,14 @@
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  server: {
-    port: 3000
-  },
-  preview: {
-    port: 3000
-  },
+  plugins: [react()],
   build: {
     lib: {
-      entry: 'src/index.ts',
-      name: 'TrustViewWidget',
-      fileName: 'widget',
-      formats: ['iife']
+      entry: 'src/bootstrap/index.ts',
+      name: 'TrustviewWidget',
+      formats: ['iife'],
+      fileName: () => 'widget.js'
     },
     rollupOptions: {
       output: {
