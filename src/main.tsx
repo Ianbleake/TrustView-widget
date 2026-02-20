@@ -11,7 +11,9 @@ function mountComponent(Component: any, target: Element) {
   root.render(<Component />);
 }
 
-function mountAll() {
+function mountAll(config: { storeId: number }) {
+
+  console.log("Store ID:", config.storeId);
 
   // 1️⃣ Grid Reviews (producto)
   const productPage = document.querySelector("#single-product");
