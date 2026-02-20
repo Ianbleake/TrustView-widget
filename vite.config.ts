@@ -1,24 +1,19 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  plugins: [tailwindcss(),react()],
+  plugins: [react()],
   build: {
     lib: {
-      entry: 'src/bootstrap/index.ts',
-      name: 'TrustviewWidget',
-      formats: ['iife'],
-      fileName: () => 'widget.js'
+      entry: "src/main.tsx",
+      name: "Trustview",
+      fileName: () => "trustview-widget.bundle.js",
+      formats: ["iife"]
     },
     rollupOptions: {
       output: {
         inlineDynamicImports: true
       }
     }
-  },
-  css: {
-    postcss: './postcss.config.js'
   }
-  
-})
+});
