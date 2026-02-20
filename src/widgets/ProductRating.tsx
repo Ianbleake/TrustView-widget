@@ -1,15 +1,8 @@
 export function ProductRating() {
   return (
-    <div style={boxStyle}>
-      ⭐ Product Rating Widget
+    <div className="mt-2 inline-flex items-center gap-2 rounded-lg bg-emerald-800 px-3 py-2 text-sm font-medium text-white shadow">
+      <span>⭐ 4.8</span>
+      <span className="text-emerald-200">(24 reviews)</span>
     </div>
   );
 }
-
-const boxStyle = {
-  background: "#065f46",
-  color: "white",
-  padding: "8px",
-  borderRadius: "8px",
-  marginTop: "8px"
-};

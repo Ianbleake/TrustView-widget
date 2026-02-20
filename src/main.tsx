@@ -1,15 +1,35 @@
 import { createRoot } from "react-dom/client";
 import { GridReviews } from "./widgets/GridReviews";
+import { LastReviews } from "./widgets/LastReviews";
 import { ProductRating } from "./widgets/ProductRating";
 import { ProductRatingCard } from "./widgets/ProductRatingCard";
-import { LastReviews } from "./widgets/LastReviews";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./services/queryClient";
+import styles from "./styles/index.css?inline";
+
 
 function mountComponent(Component: any, target: Element, props: any) {
-  const container = document.createElement("div");
-  target.appendChild(container);
 
-  const root = createRoot(container);
-  root.render(<Component {...props} />);
+  const host = document.createElement("div");
+  target.appendChild(host);
+
+  const shadowRoot = host.attachShadow({ mode: "open" });
+
+  // 🔹 Inyectar Tailwind dentro del shadow
+  const styleTag = document.createElement("style");
+  styleTag.textContent = styles;
+  shadowRoot.appendChild(styleTag);
+
+  const mountPoint = document.createElement("div");
+  shadowRoot.appendChild(mountPoint);
+
+  const root = createRoot(mountPoint);
+
+  root.render(
+    <QueryClientProvider client={queryClient}>
+      <Component {...props} />
+    </QueryClientProvider>
+  );
 }
 
 // 🔹 Grid Reviews (PDP)
