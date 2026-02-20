@@ -25,5 +25,5 @@ function mount() {
 }
 
 (window as any).Trustview = {
-  init: mount
+  mount
 };
