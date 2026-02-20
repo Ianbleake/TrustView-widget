@@ -32,7 +32,7 @@ function mountAll() {
   });
 
   // 4️⃣ Last Reviews en home
-  const footer = document.querySelector(".js-footer");
+  const footer = document.querySelector(".js-home-sections-container");
   if (footer) {
     mountComponent(LastReviews, footer);
   }
