@@ -1,8 +1,10 @@
+import { widgetConfig } from "../content/widgetConfig";
+import { StarsRating } from "./components/StarsRating";
+
 export function ProductRatingCard() {
   return (
-    <div className="mt-1 flex items-center gap-1 text-xs font-medium text-violet-600">
-      <span>⭐ 4.7</span>
-      <span className="text-gray-500">(12)</span>
+    <div className="">
+      <StarsRating count={3} bodyColor={widgetConfig.starBodyColor} fillColor={widgetConfig.starFillColor} emptyColor={widgetConfig.emptyStarColor} />
     </div>
   );
 }
