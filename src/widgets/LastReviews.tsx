@@ -6,7 +6,7 @@ import { ReviewCardWidget } from "./components/ReviewCard";
 
 export function LastReviews() {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-1 flex-col gap-8 m-auto">
 
       <div className="">
         <h1
