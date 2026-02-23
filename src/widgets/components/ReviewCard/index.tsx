@@ -29,7 +29,7 @@ export const ReviewCardWidget = ({
   return (
     <div
       className={merge(
-        "w-full shadow-md flex flex-col p-4 hover:shadow-lg transition-all duration-300 overflow-hidden gap-4",
+        "w-full shadow-stone-200 shadow-md border border-gray-200 flex flex-col p-4 hover:shadow-lg transition-all duration-300 overflow-hidden gap-4",
         borderRadius[config.border]
       )}
       style={{ backgroundColor: config.background }}
