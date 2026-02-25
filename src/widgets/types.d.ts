@@ -37,7 +37,7 @@ type Review = {
   product: string;
   date: string;
   status: ReviewState;
-  product_url: string;
+  productUrl: string;
 }
 
 type TextStyle = {
