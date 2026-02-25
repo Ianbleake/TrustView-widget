@@ -1,4 +1,8 @@
 import moment from "moment";
+import "moment/dist/locale/es";
+
+moment.updateLocale("es", {});
+moment.locale("es");
 
 export default function formatDate(date: string, format?: boolean): string {
 

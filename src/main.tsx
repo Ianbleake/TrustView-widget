@@ -17,8 +17,6 @@ function WidgetBootstrap({ Component, props }: { Component: React.ComponentType;
   if (isLoading) return null;
   if (error || !data) return null;
 
-  console.log("ResponseData:",data)
-
   return <Component {...props} widgetConfig={data.data.widgetConfig} />;
 }
 
