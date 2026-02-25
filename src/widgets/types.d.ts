@@ -29,14 +29,15 @@ type WidgetStyles = {
 };
 
 type Review = {
-  id: string, 
-  author: string,
-  rating: number,
-  content: string,
-  productId: string,
-  product: string,
-  date: string,
-  status: ReviewState
+  id: string;
+  author: string;
+  rating: number;
+  content: string;
+  productId: string;
+  product: string;
+  date: string;
+  status: ReviewState;
+  product_url: string;
 }
 
 type TextStyle = {
