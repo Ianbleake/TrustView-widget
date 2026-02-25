@@ -14,8 +14,10 @@ function WidgetBootstrap({ Component, props }: { Component: React.ComponentType;
   
   const { data, isLoading, error } = useGetConfig(props.storeId);
 
-  if (isLoading) return null; // o skeleton
+  if (isLoading) return null;
   if (error || !data) return null;
+
+  console.log(data.data.widgetConfig)
 
   return <Component {...props} widgetConfig={data.data.widgetConfig} />;
 }
