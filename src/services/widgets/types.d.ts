@@ -33,7 +33,7 @@ type GetLastReviewsResponse = {
 }
 
 type GetConfigPayload = {
-  store_id: string; 
+  storeId: string; 
 }
 
 type GetConfigResponse = {
