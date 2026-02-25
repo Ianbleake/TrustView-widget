@@ -31,3 +31,15 @@ type GetLastReviewsResponse = {
   data: Review[],
   meta: undefined,
 }
+
+type GetConfigPayload = {
+  store_id: string; 
+}
+
+type GetConfigResponse = {
+  success: boolean,
+  data: {
+    widgetConfig: WidgetStyles;
+  },
+  meta: undefined
+}

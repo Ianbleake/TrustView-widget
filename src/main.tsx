@@ -6,7 +6,19 @@ import { ProductRatingCard } from "./widgets/ProductRatingCard";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./services/queryClient";
 import styles from "./styles/index.css?inline";
+import { useGetConfig } from "./hooks/config/useGetConfig";
 
+
+// eslint-disable-next-line react-refresh/only-export-components, @typescript-eslint/no-explicit-any
+function WidgetBootstrap({ Component, props }: { Component: React.ComponentType; props: any }) {
+  
+  const { data, isLoading, error } = useGetConfig(props.storeId);
+
+  if (isLoading) return null; // o skeleton
+  if (error || !data) return null;
+
+  return <Component {...props} widgetConfig={data} />;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mountComponent(Component: any, target: Element, props: any) {
@@ -27,7 +39,7 @@ function mountComponent(Component: any, target: Element, props: any) {
 
   root.render(
     <QueryClientProvider client={queryClient}>
-      <Component {...props} />
+      <WidgetBootstrap Component={Component} props={props} />
     </QueryClientProvider>
   );
 }

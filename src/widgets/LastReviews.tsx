@@ -1,10 +1,9 @@
-import { widgetConfig } from "../content/widgetConfig";
 import { useLastReviews } from "../hooks/widgets/useLastReviews";
 import { getTextStyleClasses } from "../utils/getTextStyleClasses";
 import { merge } from "../utils/mergeStyles";
 import { ReviewCardWidget } from "./components/ReviewCard";
 
-export function LastReviews({ storeId }: { storeId: string }) {
+export function LastReviews({ storeId, widgetConfig }: { storeId: string, widgetConfig: WidgetStyles }) {
 
   const { data, isLoading } = useLastReviews(storeId);
 

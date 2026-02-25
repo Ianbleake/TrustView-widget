@@ -1,4 +1,3 @@
-import { widgetConfig } from "../content/widgetConfig";
 import { useProductReviews } from "../hooks/widgets/useProductReviews";
 import { getTextStyleClasses } from "../utils/getTextStyleClasses";
 import { merge } from "../utils/mergeStyles";
@@ -7,9 +6,11 @@ import { ReviewCardWidget } from "./components/ReviewCard";
 export function GridReviews({
   storeId,
   productId,
+  widgetConfig,
 }: {
   storeId: string;
   productId: string;
+  widgetConfig: WidgetStyles
 }) {
 
   const { data, isLoading } = useProductReviews(storeId, productId);

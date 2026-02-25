@@ -1,13 +1,15 @@
-import { widgetConfig } from "../content/widgetConfig";
+
 import { useProductRating } from "../hooks/widgets/useProductRating";
 import { StarsRating } from "./components/StarsRating";
 
 export function ProductRating({
   storeId,
   productId,
+  widgetConfig,
 }: {
   storeId: string;
   productId: string;
+  widgetConfig: WidgetStyles;
 }) {
 
   const { data, isLoading } = useProductRating(storeId, productId);
