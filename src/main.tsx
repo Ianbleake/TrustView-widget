@@ -17,7 +17,7 @@ function WidgetBootstrap({ Component, props }: { Component: React.ComponentType;
   if (isLoading) return null; // o skeleton
   if (error || !data) return null;
 
-  return <Component {...props} widgetConfig={data} />;
+  return <Component {...props} widgetConfig={data.data.widgetConfig} />;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
