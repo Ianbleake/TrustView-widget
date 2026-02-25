@@ -12,3 +12,7 @@
 .test-shadow {
   box-shadow: 0 2px 10px #0000004d;
 }
+
+.border-t.pt-4 {
+  border-top: 1px solid gainsboro;
+}
