@@ -98,7 +98,7 @@ export const ReviewCardWidget = ({
               <span className="font-medium">Producto: </span>
               {
                 review.productUrl ? (
-                  <a href={review.productUrl} target='_blank' style={{ color: config.productColor }}>
+                  <a href={review.productUrl} style={{ color: config.productColor }}>
                     {review.product}
                   </a>
                 ) : (
