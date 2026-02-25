@@ -8,6 +8,7 @@ import { queryClient } from "./services/queryClient";
 import styles from "./styles/index.css?inline";
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mountComponent(Component: any, target: Element, props: any) {
 
   const host = document.createElement("div");
@@ -15,7 +16,6 @@ function mountComponent(Component: any, target: Element, props: any) {
 
   const shadowRoot = host.attachShadow({ mode: "open" });
 
-  // 🔹 Inyectar Tailwind dentro del shadow
   const styleTag = document.createElement("style");
   styleTag.textContent = styles;
   shadowRoot.appendChild(styleTag);
@@ -32,13 +32,10 @@ function mountComponent(Component: any, target: Element, props: any) {
   );
 }
 
-// 🔹 Grid Reviews (PDP)
 function mountGridReviews(config: {
   storeId: number;
   productId: string;
 }) {
-
-  console.log("Mounting GridReviews with config:", config);
 
   const target = document.querySelector("#single-product");
   if (!target) return;
@@ -46,13 +43,10 @@ function mountGridReviews(config: {
   mountComponent(GridReviews, target, config);
 }
 
-// 🔹 Product Rating (PDP)
 function mountProductRating(config: {
   storeId: number;
   productId: string;
 }) {
-
-  console.log("Mounting ProductRating with config:", config);
 
   const target = document.querySelector(".price-container");
   if (!target) return;
@@ -60,24 +54,18 @@ function mountProductRating(config: {
   mountComponent(ProductRating, target, config);
 }
 
-// 🔹 Rating en cards
 function mountProductRatingCard(config: {
   storeId: number;
   productId: string;
   target: Element;
 }) {
 
-  console.log("Mounting ProductRatingCard with config:", config);
-
   mountComponent(ProductRatingCard, config.target, config);
 }
 
-// 🔹 Last Reviews
 function mountLastReviews(config: {
   storeId: number;
 }) {
-
-  console.log("Mounting LastReviews with config:", config);
 
   const target = document.querySelector(".js-home-sections-container");
   if (!target) return;
@@ -85,6 +73,7 @@ function mountLastReviews(config: {
   mountComponent(LastReviews, target, config);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (window as any).Trustview = {
   mountGridReviews,
   mountProductRating,

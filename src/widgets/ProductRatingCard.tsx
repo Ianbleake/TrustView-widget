@@ -1,10 +1,27 @@
 import { widgetConfig } from "../content/widgetConfig";
+import { useProductRating } from "../hooks/widgets/useProductRating";
 import { StarsRating } from "./components/StarsRating";
 
-export function ProductRatingCard() {
+export function ProductRatingCard({
+  storeId,
+  productId,
+}: {
+  storeId: string;
+  productId: string;
+}) {
+
+  const { data, isLoading } = useProductRating(storeId, productId);
+
+  if (isLoading || !data) return null;
+
   return (
-    <div className="flex flex-1 items-center justify-center my-2">
-      <StarsRating count={3} bodyColor={widgetConfig.starBodyColor} fillColor={widgetConfig.starFillColor} emptyColor={widgetConfig.emptyStarColor} />
+    <div className="flex items-center justify-center my-2">
+      <StarsRating
+        count={data.data.rating}
+        bodyColor={widgetConfig.starBodyColor}
+        fillColor={widgetConfig.starFillColor}
+        emptyColor={widgetConfig.emptyStarColor}
+      />
     </div>
   );
 }
