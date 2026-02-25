@@ -35,7 +35,7 @@ export function GridReviews({
             key={review.id}
             review={review}
             config={widgetConfig}
-          />
+            showProduct={false}          />
         ))}
       </div>
     </div>
