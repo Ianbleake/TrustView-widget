@@ -63,7 +63,7 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
   // eslint-disable-next-line react-hooks/incompatible-library
   const selectedRating = watch("rating");
 
-  const { mutate:createReview, isPending } = useCreateReview();
+  const { mutate:createReview, isPending, isSuccess } = useCreateReview();
 
   const onSubmit = (data:NewReviewValues) => {
 
@@ -94,7 +94,7 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
 
   return (
     <div
-      className="fixed inset-0 z-9999 flex items-center justify-center bg-gray-200/50 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-9999 flex flex-col gap-8 items-center justify-center bg-gray-200/50 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
     >
 
@@ -155,6 +155,7 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
               placeholder="Tu nombre"
               className="border w-full rounded-lg px-3 py-2 outline-none focus:ring-2 input-tv"
               maxLength={100}
+              disabled={isPending || isSuccess}
               {
                 ...register("name",{
                   required: "Oye no te quedes sin el merito, necesitamos tu nombre!",
@@ -174,6 +175,7 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
               rows={4}
               className="border w-full rounded-lg px-3 py-2 outline-none focus:ring-2 resize-none input-tv"
               maxLength={140}
+              disabled={isPending || isSuccess}
               {
                 ...register("review",{
                   required: "No olvides tu reseña!",
@@ -194,7 +196,7 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
               backgroundColor: widgetConfig.avatarBackground,
               color: "#fff",
             }}
-            disabled={isPending}
+            disabled={isPending || isSuccess}
           >
             {
               isPending ? (
