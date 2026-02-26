@@ -1,5 +1,5 @@
 import { Plus, X, Star } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { merge } from "../../../utils/mergeStyles";
 
@@ -89,14 +89,28 @@ export const CreateReview = ({
   widgetConfig,
 }: CreateReviewProps): React.ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  console.log("storeData:",{
+  console.log("data:",{
     storeId,
     productId,
   })
 
+  const getPortalRoot = () => {
+    if (!containerRef.current) return document.body;
+
+    const root = containerRef.current.getRootNode();
+
+    // Si estamos dentro de shadow DOM
+    if (root instanceof ShadowRoot) {
+      return root;
+    }
+
+    return document.body;
+  };
+
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative">
       <button
         onClick={() => setIsOpen(true)}
         className={merge("flex flex-row items-center gap-2")}
@@ -108,11 +122,14 @@ export const CreateReview = ({
 
       {isOpen &&
         createPortal(
-          <ReviewModal
-            onClose={() => setIsOpen(false)}
-            primaryColor={widgetConfig.avatarBackground}
-          />,
-          document.body
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <div className="bg-white p-6 rounded-2xl shadow-xl">
+              <ReviewModal onClose={() => setIsOpen(false)} primaryColor={widgetConfig.avatarBackground}/>
+              
+            </div>
+          </div>,
+          // eslint-disable-next-line react-hooks/refs
+          getPortalRoot()
         )}
     </div>
   );
