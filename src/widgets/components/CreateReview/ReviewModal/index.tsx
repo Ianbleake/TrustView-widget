@@ -103,7 +103,7 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
             <input
               type="text"
               placeholder="Tu nombre"
-              className="border flex-1 rounded-lg px-3 py-2 outline-none focus:ring-2 input-tv"
+              className="border w-full rounded-lg px-3 py-2 outline-none focus:ring-2 input-tv"
               maxLength={100}
               {
                 ...register("name",{
@@ -122,7 +122,7 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
             <textarea
               placeholder="Escribe tu reseña..."
               rows={4}
-              className="border flex-1 rounded-lg px-3 py-2 outline-none focus:ring-2 resize-none input-tv"
+              className="border w-full rounded-lg px-3 py-2 outline-none focus:ring-2 resize-none input-tv"
               maxLength={140}
               {
                 ...register("review",{
@@ -139,7 +139,7 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
 
           <button
             type="submit"
-            className="rounded-lg py-2 font-medium transition hover:opacity-90"
+            className="rounded-lg py-2 font-medium transition hover:opacity-90 cursor-pointer"
             style={{
               backgroundColor: widgetConfig.avatarBackground,
               color: "#fff",
