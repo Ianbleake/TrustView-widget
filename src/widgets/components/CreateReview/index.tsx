@@ -55,7 +55,7 @@ export const CreateReview = ({
 
       {isOpen &&
         createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black/50 backdrop-blur-sm">
             <div className="bg-white p-6 rounded-2xl shadow-xl">
               <ReviewModal onClose={() => setIsOpen(false)} widgetConfig={widgetConfig}/>
               
