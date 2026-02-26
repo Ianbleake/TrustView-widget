@@ -99,11 +99,11 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
           })}
         </div>
 
-          <div className="flex flex-col items-start gap-2">
+          <div className="w-full flex flex-col items-start gap-2">
             <input
               type="text"
               placeholder="Tu nombre"
-              className="border rounded-lg px-3 py-2 outline-none focus:ring-2 input-tv"
+              className="border flex-1 rounded-lg px-3 py-2 outline-none focus:ring-2 input-tv"
               maxLength={100}
               {
                 ...register("name",{
@@ -118,11 +118,11 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
             )}
           </div>
 
-          <div className="flex flex-col items-start gap-2">
+          <div className="w-full flex flex-col items-start gap-2">
             <textarea
               placeholder="Escribe tu reseña..."
               rows={4}
-              className="border rounded-lg px-3 py-2 outline-none focus:ring-2 resize-none input-tv"
+              className="border flex-1 rounded-lg px-3 py-2 outline-none focus:ring-2 resize-none input-tv"
               maxLength={140}
               {
                 ...register("review",{
