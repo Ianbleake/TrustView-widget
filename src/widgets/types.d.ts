@@ -49,6 +49,8 @@ type TextStyle = {
 type GridReviewsProps = {
   storeId: string;
   productId: string;
+  productName?: string;
+  productUrl?: string;
   widgetConfig: WidgetStyles
 }
 

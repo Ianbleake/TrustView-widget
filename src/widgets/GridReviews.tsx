@@ -7,6 +7,8 @@ import { ReviewCardWidget } from "./components/ReviewCard";
 export function GridReviews({
   storeId,
   productId,
+  productName,
+  productUrl,
   widgetConfig,
 }: GridReviewsProps ) {
 
@@ -27,7 +29,7 @@ export function GridReviews({
           {widgetConfig.sectionTitle}
         </h1>
 
-        <CreateReview widgetConfig={widgetConfig} storeId={storeId} productId={productId}/>
+        <CreateReview productName={productName} productUrl={productUrl} widgetConfig={widgetConfig} storeId={storeId} productId={productId}/>
       </div>
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4">

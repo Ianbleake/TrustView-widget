@@ -3,7 +3,7 @@
   if (window.TrustviewLoaded) return;
   window.TrustviewLoaded = true;
 
-  console.log("Trustview loader iniciado v.2.1 🚀");
+  console.log("Trustview loader iniciado v.2.2 🚀");
 
   function getStoreId() {
     return window.LS?.store?.id || null;
@@ -15,6 +15,20 @@
 
     const match = el.dataset.store.match(/product-info-(\d+)/);
     return match ? match[1] : null;
+  }
+
+  function getProductNameFromPDP() {
+    const nameElement = document.querySelector(".js-product-name");
+    if (!nameElement) return null;
+  
+    return nameElement.textContent?.trim() || null;
+  }
+
+  function getProductUrl() {
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical?.href) return canonical.href;
+  
+    return window.location.href;
   }
 
   function getListingProducts() {
@@ -53,7 +67,10 @@
       const productId = getProductIdFromPDP();
       if (productId) {
 
-        Trustview.mountGridReviews({ storeId, productId });
+        const productName = getProductNameFromPDP();
+        const productUrl = getProductUrl();
+
+        Trustview.mountGridReviews({ storeId, productId,productName,productUrl });
         Trustview.mountProductRating({ storeId, productId });
       }
 

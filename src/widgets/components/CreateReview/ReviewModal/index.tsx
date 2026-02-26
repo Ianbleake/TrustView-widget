@@ -45,7 +45,6 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
           </button>
         </div>
 
-        {/* Form */}
         <form className="flex flex-col gap-4">
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (

@@ -7,12 +7,16 @@ import { ReviewModal } from "./ReviewModal";
 type CreateReviewProps = {
   storeId: string;
   productId: string;
+  productName?: string;
+  productUrl?: string;
   widgetConfig: WidgetStyles;
 };
 
 export const CreateReview = ({
   storeId,
   productId,
+  productName,
+  productUrl,
   widgetConfig,
 }: CreateReviewProps): React.ReactElement => {
 
@@ -22,6 +26,8 @@ export const CreateReview = ({
   console.log("data:",{
     storeId,
     productId,
+    productName,
+    productUrl,
   })
 
   const getPortalRoot = () => {
@@ -40,10 +46,10 @@ export const CreateReview = ({
     <div ref={containerRef} className="relative">
       <button
         onClick={() => setIsOpen(true)}
-        className={merge("flex flex-row items-center gap-2")}
+        className={merge("flex flex-row items-center gap-2 cursor-pointer")}
         style={{ color: widgetConfig.dateColor }}
       >
-        Dejar una reseña
+        Que opinas de {productName}
         <Plus size={16} />
       </button>
 

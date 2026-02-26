@@ -47,6 +47,8 @@ function mountComponent(Component: any, target: Element, props: any) {
 function mountGridReviews(config: {
   storeId: number;
   productId: string;
+  productName?: string;
+  productUrl?: string;
 }) {
 
   const target = document.querySelector("#single-product");
