@@ -13,7 +13,7 @@ export function ProductRating({
   if (isLoading || !data) return null;
 
   return (
-    <div className="flex items-center justify-start">
+    <div className="flex items-center justify-center md:justify-start">
       <StarsRating
         count={data.data.rating}
         bodyColor={widgetConfig.starBodyColor}

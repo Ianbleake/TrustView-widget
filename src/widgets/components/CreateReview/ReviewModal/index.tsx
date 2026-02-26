@@ -2,10 +2,17 @@ import { X, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { merge } from "../../../../utils/mergeStyles";
 import { useForm } from "react-hook-form";
+import useCreateReview from "../../../../hooks/widgets/useCreateReview";
 
 type ModalProps = {
   onClose: () => void;
   widgetConfig: WidgetStyles;
+  productData: {
+    storeId: string;
+    productId: string;
+    productName?: string;
+    productUrl?: string;
+  }
 };
 
 type NewReviewValues = {
@@ -14,8 +21,11 @@ type NewReviewValues = {
   review: string;
 }
 
-export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
+type SubmitState = "idle" | "success" | "error";
 
+export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) => {
+
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
   useEffect(() => {
@@ -39,6 +49,7 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<NewReviewValues>({
     defaultValues: {
@@ -49,10 +60,36 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
     mode: "onSubmit",
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const selectedRating = watch("rating");
 
+  const { mutate:createReview, isPending } = useCreateReview();
+
   const onSubmit = (data:NewReviewValues) => {
-    console.log(data);
+
+    const newReviewPayload:NewReviewPayload = {
+      tn_store_id: productData.storeId,
+      product_id: productData.productId,
+      product_name: productData.productName,
+      author_name: data.name,
+      rating: data.rating,
+      content: data.review,
+      product_url: productData.productUrl || "",
+    }
+    
+    createReview(newReviewPayload, {
+      onError: () => {
+        setSubmitState("error");
+      },
+      onSuccess: () => {
+        setSubmitState("success");
+        reset();
+        
+        setTimeout(() => {
+          onClose();
+        }, 1500);
+      },
+    });
   }
 
   return (
@@ -60,8 +97,21 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
       className="fixed inset-0 z-9999 flex items-center justify-center bg-gray-200/50 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
     >
+
+      {submitState === "success" && (
+        <div className="mb-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">
+          🎉 Reseña enviada correctamente
+        </div>
+      )}
+
+      {submitState === "error" && (
+        <div className="mb-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+          Algo salió mal. Inténtalo de nuevo.
+        </div>
+      )}
+
       <div
-        className={merge("w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-scale-in",borderRadius[widgetConfig.border])}
+        className={merge("m-2.5 md:m-0 w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-scale-in",borderRadius[widgetConfig.border])}
         onClick={(e) => e.stopPropagation()}
       >
 
@@ -144,8 +194,15 @@ export const ReviewModal = ({ onClose, widgetConfig }: ModalProps) => {
               backgroundColor: widgetConfig.avatarBackground,
               color: "#fff",
             }}
+            disabled={isPending}
           >
-            Publicar reseña
+            {
+              isPending ? (
+                <span>Enviando...</span>
+              ) : (
+                <span>Publicar reseña</span>
+              )
+            }
           </button>
         </form>
       </div>

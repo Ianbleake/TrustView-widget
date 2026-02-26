@@ -43,3 +43,19 @@ type GetConfigResponse = {
   },
   meta: undefined
 }
+
+type NewReviewPayload = {
+  tn_store_id: string;
+  product_id: string; 
+  product_name?: string | null;
+  author_name: string;
+  rating: number;
+  content?: string;
+  product_url: string;
+};
+
+type NewReviewResponse = {
+	success: boolean;
+	data: Review;
+	meta: null;
+};

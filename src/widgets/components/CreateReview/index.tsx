@@ -23,13 +23,6 @@ export const CreateReview = ({
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  console.log("data:",{
-    storeId,
-    productId,
-    productName,
-    productUrl,
-  })
-
   const getPortalRoot = () => {
     if (!containerRef.current) return document.body;
 
@@ -42,6 +35,13 @@ export const CreateReview = ({
     return document.body;
   };
 
+  const productData = {
+    storeId,
+    productId,
+    productName,
+    productUrl,
+  }
+
   return (
     <div ref={containerRef} className="relative">
       <button
@@ -49,15 +49,15 @@ export const CreateReview = ({
         className={merge("flex flex-row items-center gap-2 cursor-pointer")}
         style={{ color: widgetConfig.dateColor }}
       >
-        Que opinas de {productName}
-        <Plus size={16} />
+        Deja una reseña!
+        <Plus size={25} />
       </button>
 
       {isOpen &&
         createPortal(
           <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black/50 backdrop-blur-sm">
             <div className="bg-white p-6 rounded-2xl shadow-xl">
-              <ReviewModal onClose={() => setIsOpen(false)} widgetConfig={widgetConfig}/>
+              <ReviewModal productData={productData} onClose={() => setIsOpen(false)} widgetConfig={widgetConfig}/>
               
             </div>
           </div>,
