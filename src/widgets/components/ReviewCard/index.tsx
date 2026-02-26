@@ -26,8 +26,6 @@ export const ReviewCardWidget = ({
     lg: "rounded-xl",
   };
 
-  console.log("Review",review)
-
   return (
     <div
       className={merge(
