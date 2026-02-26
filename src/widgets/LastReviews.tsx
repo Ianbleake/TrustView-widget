@@ -3,7 +3,7 @@ import { getTextStyleClasses } from "../utils/getTextStyleClasses";
 import { merge } from "../utils/mergeStyles";
 import { ReviewCardWidget } from "./components/ReviewCard";
 
-export function LastReviews({ storeId, widgetConfig }: { storeId: string, widgetConfig: WidgetStyles }) {
+export function LastReviews({ storeId, widgetConfig }: LastReviewsProps) {
 
   const { data, isLoading } = useLastReviews(storeId);
 

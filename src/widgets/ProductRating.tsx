@@ -6,11 +6,7 @@ export function ProductRating({
   storeId,
   productId,
   widgetConfig,
-}: {
-  storeId: string;
-  productId: string;
-  widgetConfig: WidgetStyles;
-}) {
+}: ProductRatingProps) {
 
   const { data, isLoading } = useProductRating(storeId, productId);
 

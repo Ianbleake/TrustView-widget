@@ -5,11 +5,7 @@ export function ProductRatingCard({
   storeId,
   productId,
   widgetConfig,
-}: {
-  storeId: string;
-  productId: string;
-  widgetConfig: WidgetStyles;
-}) {
+}: ProductRatingCardProps ) {
 
   const { data, isLoading } = useProductRating(storeId, productId);
 

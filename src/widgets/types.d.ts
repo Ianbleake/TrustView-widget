@@ -45,3 +45,23 @@ type TextStyle = {
   italic: boolean;
   underline: boolean;
 };
+
+type GridReviewsProps = {
+  storeId: string;
+  productId: string;
+  widgetConfig: WidgetStyles
+}
+
+type LastReviewsProps = { storeId: string, widgetConfig: WidgetStyles }
+
+type ProductRatingProps = {
+  storeId: string;
+  productId: string;
+  widgetConfig: WidgetStyles;
+}
+
+type ProductRatingCardProps = {
+  storeId: string;
+  productId: string;
+  widgetConfig: WidgetStyles;
+}
