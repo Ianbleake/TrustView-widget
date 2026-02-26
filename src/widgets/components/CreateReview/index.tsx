@@ -9,26 +9,25 @@ type CreateReviewProps = {
   widgetConfig: WidgetStyles;
 };
 
-export const CreateReview = ({
-  storeId,
-  productId,
-  widgetConfig,
-}: CreateReviewProps): React.ReactElement => {
-  const [isOpen, setIsOpen] = useState(false);
+type ModalProps = {
+  onClose: () => void;
+  primaryColor: string;
+};
 
+const ReviewModal = ({ onClose, primaryColor }: ModalProps) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
+      if (e.key === "Escape") onClose();
     };
 
-    if (isOpen) window.addEventListener("keydown", handleEsc);
+    window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, [isOpen]);
+  }, [onClose]);
 
-  const Modal = () => (
+  return (
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in"
-      onClick={() => setIsOpen(false)}
+      onClick={onClose}
     >
       <div
         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-scale-in"
@@ -38,7 +37,7 @@ export const CreateReview = ({
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">Dejar una reseña</h2>
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={onClose}
             className="opacity-60 hover:opacity-100 transition"
           >
             <X size={20} />
@@ -47,7 +46,6 @@ export const CreateReview = ({
 
         {/* Form */}
         <form className="flex flex-col gap-4">
-          {/* Rating */}
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <Star
@@ -57,26 +55,23 @@ export const CreateReview = ({
             ))}
           </div>
 
-          {/* Name */}
           <input
             type="text"
             placeholder="Tu nombre"
             className="border rounded-lg px-3 py-2 outline-none focus:ring-2"
           />
 
-          {/* Review */}
           <textarea
             placeholder="Escribe tu reseña..."
             rows={4}
             className="border rounded-lg px-3 py-2 outline-none focus:ring-2 resize-none"
           />
 
-          {/* Submit */}
           <button
             type="submit"
             className="rounded-lg py-2 font-medium transition hover:opacity-90"
             style={{
-              backgroundColor: widgetConfig.avatarBackground,
+              backgroundColor: primaryColor,
               color: "#fff",
             }}
           >
@@ -86,6 +81,19 @@ export const CreateReview = ({
       </div>
     </div>
   );
+};
+
+export const CreateReview = ({
+  storeId,
+  productId,
+  widgetConfig,
+}: CreateReviewProps): React.ReactElement => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  console.log("storeData:",{
+    storeId,
+    productId,
+  })
 
   return (
     <div className="relative">
@@ -98,7 +106,14 @@ export const CreateReview = ({
         <Plus size={16} />
       </button>
 
-      {isOpen && createPortal(<Modal />, document.body)}
+      {isOpen &&
+        createPortal(
+          <ReviewModal
+            onClose={() => setIsOpen(false)}
+            primaryColor={widgetConfig.avatarBackground}
+          />,
+          document.body
+        )}
     </div>
   );
 };
