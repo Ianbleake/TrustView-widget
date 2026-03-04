@@ -51,6 +51,7 @@ type GridReviewsProps = {
   productId: string;
   productName?: string;
   productUrl?: string;
+  productImg?: string;
   widgetConfig: WidgetStyles
 }
 

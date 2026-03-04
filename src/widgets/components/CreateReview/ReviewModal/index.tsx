@@ -12,6 +12,7 @@ type ModalProps = {
     productId: string;
     productName?: string;
     productUrl?: string;
+    productImg?: string;
   }
 };
 
@@ -68,13 +69,14 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
   const onSubmit = (data:NewReviewValues) => {
 
     const newReviewPayload:NewReviewPayload = {
-      tn_store_id: productData.storeId,
+      store_external_id: productData.storeId,
       product_external_id: productData.productId,
       product_name: productData.productName,
+      product_img: productData.productImg || "", 
       author_name: data.name,
       rating: data.rating,
       content: data.review,
-      product_url: productData.productUrl || "",
+      product_url: productData.productUrl || "#",
     }
     
     createReview(newReviewPayload, {

@@ -49,6 +49,7 @@ function mountGridReviews(config: {
   productId: string;
   productName?: string;
   productUrl?: string;
+  productImg?: string;
 }) {
 
   const target = document.querySelector("#single-product");

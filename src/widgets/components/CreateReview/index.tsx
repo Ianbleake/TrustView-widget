@@ -9,6 +9,7 @@ type CreateReviewProps = {
   productId: string;
   productName?: string;
   productUrl?: string;
+  productImg?: string;
   widgetConfig: WidgetStyles;
 };
 
@@ -17,6 +18,7 @@ export const CreateReview = ({
   productId,
   productName,
   productUrl,
+  productImg,
   widgetConfig,
 }: CreateReviewProps): React.ReactElement => {
 
@@ -40,6 +42,7 @@ export const CreateReview = ({
     productId,
     productName,
     productUrl,
+    productImg
   }
 
   return (

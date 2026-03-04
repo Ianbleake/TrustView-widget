@@ -31,6 +31,25 @@
     return window.location.href;
   }
 
+  function getProductImg() {
+    const firstSlide = document.querySelector(
+      ".js-swiper-product .swiper-wrapper .js-product-slide a"
+    )
+  
+    if (!firstSlide) return null
+  
+    let imageUrl = firstSlide.getAttribute("href")
+  
+    if (!imageUrl) return null
+  
+    // Tienda Nube usa URLs sin protocolo (//)
+    if (imageUrl.startsWith("//")) {
+      imageUrl = window.location.protocol + imageUrl
+    }
+  
+    return imageUrl
+  }
+
   function getListingProducts() {
     const nodes = document.querySelectorAll('[data-store^="product-item-name-"]');
 
@@ -69,8 +88,9 @@
 
         const productName = getProductNameFromPDP();
         const productUrl = getProductUrl();
+        const productImg = getProductImg();
 
-        Trustview.mountGridReviews({ storeId, productId,productName,productUrl });
+        Trustview.mountGridReviews({ storeId, productId,productName,productUrl,productImg });
         Trustview.mountProductRating({ storeId, productId });
       }
 

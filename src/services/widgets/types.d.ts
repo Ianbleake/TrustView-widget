@@ -45,13 +45,14 @@ type GetConfigResponse = {
 }
 
 type NewReviewPayload = {
-  tn_store_id: string;
+  store_external_id: string;
   product_external_id: string; 
   product_name?: string | null;
+  product_url: string;
+  product_img: string;
   author_name: string;
   rating: number;
   content?: string;
-  product_url: string;
 };
 
 type NewReviewResponse = {

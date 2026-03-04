@@ -10,6 +10,7 @@ export function GridReviews({
   productName,
   productUrl,
   widgetConfig,
+  productImg,
 }: GridReviewsProps ) {
 
   const { data, isLoading } = useProductReviews(storeId, productId);
@@ -29,7 +30,7 @@ export function GridReviews({
           {widgetConfig.sectionTitle}
         </h1>
 
-        <CreateReview productName={productName} productUrl={productUrl} widgetConfig={widgetConfig} storeId={storeId} productId={productId}/>
+        <CreateReview productName={productName} productUrl={productUrl} widgetConfig={widgetConfig} storeId={storeId} productId={productId} productImg={productImg}/>
       </div>
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
