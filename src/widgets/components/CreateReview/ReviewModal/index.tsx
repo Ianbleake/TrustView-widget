@@ -69,7 +69,7 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
 
     const newReviewPayload:NewReviewPayload = {
       tn_store_id: productData.storeId,
-      product_id: productData.productId,
+      product_external_id: productData.productId,
       product_name: productData.productName,
       author_name: data.name,
       rating: data.rating,

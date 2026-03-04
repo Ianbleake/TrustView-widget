@@ -46,7 +46,7 @@ type GetConfigResponse = {
 
 type NewReviewPayload = {
   tn_store_id: string;
-  product_id: string; 
+  product_external_id: string; 
   product_name?: string | null;
   author_name: string;
   rating: number;
