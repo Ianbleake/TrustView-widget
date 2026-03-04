@@ -3,7 +3,7 @@
   if (window.TrustviewLoaded) return;
   window.TrustviewLoaded = true;
 
-  console.log("Trustview loader iniciado v.2.2 🚀");
+  console.log("Trustview loader iniciado v.2.3 🚀");
 
   function getStoreId() {
     return window.LS?.store?.id || null;
