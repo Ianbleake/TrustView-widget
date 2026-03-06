@@ -21,27 +21,47 @@ export function GridReviews({
     <div className="flex flex-1 flex-col gap-8 px-10 mb-10">
 
       <div className="flex flex-row items-center justify-between">
-        <h1
-          className={merge(
-            "text-2xl",
-            getTextStyleClasses(widgetConfig.sectionTitleStyle)
-          )}
-        >
-          {widgetConfig.sectionTitle}
-        </h1>
+
+        {
+          data.data.length ? (
+            <h1
+              className={merge(
+                "text-2xl",
+                getTextStyleClasses(widgetConfig.sectionTitleStyle)
+              )}
+            >
+              {widgetConfig.sectionTitle}
+            </h1>
+          ) : (
+            <h1
+              className={merge(
+                "text-2xl",
+                getTextStyleClasses(widgetConfig.sectionTitleStyle)
+              )}
+            >
+              Cuentanos que opinas del producto!
+            </h1>
+          )
+        }
 
         <CreateReview productName={productName} productUrl={productUrl} widgetConfig={widgetConfig} storeId={storeId} productId={productId} productImg={productImg}/>
       </div>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {data.data.map((review) => (
-          <ReviewCardWidget
-            key={review.id}
-            review={review}
-            config={widgetConfig}
-            showProduct={false}          />
-        ))}
-      </div>
+      {
+        data.data.length ? (
+          <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {data.data.map((review) => (
+              <ReviewCardWidget
+                key={review.id}
+                review={review}
+                config={widgetConfig}
+                showProduct={false}          />
+            ))}
+          </div>
+        ) : (
+          <></>
+        )
+      }
     </div>
   );
 }
