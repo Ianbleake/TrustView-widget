@@ -15,7 +15,7 @@ export function GridReviews({
 
   const { data, isLoading } = useProductReviews(storeId, productId);
 
-  if (isLoading || !data?.data.length ) return null;
+  if ( isLoading ) return null;
 
   return (
     <div className="flex flex-1 flex-col gap-8 px-10 mb-10">
@@ -23,7 +23,7 @@ export function GridReviews({
       <div className="flex flex-row items-center justify-between">
 
         {
-          data.data.length ? (
+          data?.data.length ? (
             <h1
               className={merge(
                 "text-2xl",
@@ -48,7 +48,7 @@ export function GridReviews({
       </div>
 
       {
-        data.data.length ? (
+        data?.data.length ? (
           <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
             {data.data.map((review) => (
               <ReviewCardWidget
