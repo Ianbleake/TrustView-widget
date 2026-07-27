@@ -7,7 +7,7 @@ export const useProductRating = (
 ) =>
   useQuery({
     queryKey: ["productRating", storeId, productId],
-    queryFn: () => getProductRating({storeId, productId}),
+    queryFn: () => getProductRating({ store_external_id: storeId, product_external_id: productId }),
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
     enabled: !!storeId && !!productId,

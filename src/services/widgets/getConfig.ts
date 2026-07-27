@@ -1,10 +1,9 @@
 import { widgetRequester } from "../widgetRequester";
 
-export async function getConfig(payload: GetConfigPayload ): Promise<GetConfigResponse>{
-
+export async function getConfig(payload: GetConfigPayload): Promise<GetConfigResponse> {
   return widgetRequester({
-    method: "POST",
+    method: "GET",
     endpoint: "/widget/config",
-    payload,
-  })
+    params: payload,
+  });
 }

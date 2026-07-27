@@ -3,28 +3,31 @@ import { useEffect, useState } from "react";
 import { merge } from "../../../../utils/mergeStyles";
 import { useForm } from "react-hook-form";
 import useCreateReview from "../../../../hooks/widgets/useCreateReview";
+import { t } from "../../../../i18n/translations";
+import { queryClient } from "../../../../services/queryClient";
 
 type ModalProps = {
   onClose: () => void;
   widgetConfig: WidgetStyles;
+  locale?: string;
   productData: {
     storeId: string;
     productId: string;
     productName?: string;
     productUrl?: string;
     productImg?: string;
-  }
+  };
 };
 
 type NewReviewValues = {
   rating: number;
   name: string;
   review: string;
-}
+};
 
 type SubmitState = "idle" | "success" | "error";
 
-export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) => {
+export const ReviewModal = ({ onClose, widgetConfig, productData, locale = "es" }: ModalProps) => {
 
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [hoverRating, setHoverRating] = useState<number | null>(null);
@@ -64,21 +67,20 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
   // eslint-disable-next-line react-hooks/incompatible-library
   const selectedRating = watch("rating");
 
-  const { mutate:createReview, isPending, isSuccess } = useCreateReview();
+  const { mutate: createReview, isPending, isSuccess } = useCreateReview();
 
-  const onSubmit = (data:NewReviewValues) => {
-
-    const newReviewPayload:NewReviewPayload = {
+  const onSubmit = (data: NewReviewValues) => {
+    const newReviewPayload: NewReviewPayload = {
       store_external_id: productData.storeId,
       product_external_id: productData.productId,
       product_name: productData.productName,
-      product_img: productData.productImg || "", 
+      product_img: productData.productImg || "",
       author_name: data.name,
       rating: data.rating,
       content: data.review,
       product_url: productData.productUrl || "#",
-    }
-    
+    };
+
     createReview(newReviewPayload, {
       onError: () => {
         setSubmitState("error");
@@ -86,13 +88,18 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
       onSuccess: () => {
         setSubmitState("success");
         reset();
-        
+
+        // Invalidate all related caches so widgets refresh automatically
+        queryClient.invalidateQueries({ queryKey: ["productReviews"] });
+        queryClient.invalidateQueries({ queryKey: ["productRating"] });
+        queryClient.invalidateQueries({ queryKey: ["lastReviews"] });
+
         setTimeout(() => {
           onClose();
         }, 1500);
       },
     });
-  }
+  };
 
   return (
     <div
@@ -102,23 +109,26 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
 
       {submitState === "success" && (
         <div className="mb-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">
-          🎉 Reseña enviada correctamente
+          🎉 {t(locale, "reviewSent")}
         </div>
       )}
 
       {submitState === "error" && (
         <div className="mb-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm">
-          Algo salió mal. Inténtalo de nuevo.
+          {t(locale, "error")}
         </div>
       )}
 
       <div
-        className={merge("m-2.5 md:m-0 w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-scale-in",borderRadius[widgetConfig.border])}
+        className={merge(
+          "m-2.5 md:m-0 w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-scale-in",
+          borderRadius[widgetConfig.border]
+        )}
         onClick={(e) => e.stopPropagation()}
       >
 
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">Dejar una reseña</h2>
+          <h2 className="text-lg font-semibold">{t(locale, "modalTitle")}</h2>
           <button
             onClick={onClose}
             className="opacity-60 hover:opacity-100 transition cursor-pointer"
@@ -129,38 +139,38 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
 
-        <div className="flex gap-1">
-          {[1, 2, 3, 4, 5].map((star) => {
-            const isActive =
-              hoverRating !== null
-                ? star <= hoverRating
-                : star <= selectedRating;
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => {
+              const isActive =
+                hoverRating !== null
+                  ? star <= hoverRating
+                  : star <= selectedRating;
 
-            return (
-              <Star
-                key={star}
-                size={22}
-                onMouseEnter={() => setHoverRating(star)}
-                onMouseLeave={() => setHoverRating(null)}
-                onClick={() => setValue("rating", star, { shouldValidate: true })}
-                className="cursor-pointer transition"
-                fill={isActive ? widgetConfig.starFillColor : "transparent"}
-                color={isActive ? widgetConfig.starBodyColor : widgetConfig.emptyStarColor}
-              />
-            );
-          })}
-        </div>
+              return (
+                <Star
+                  key={star}
+                  size={22}
+                  onMouseEnter={() => setHoverRating(star)}
+                  onMouseLeave={() => setHoverRating(null)}
+                  onClick={() => setValue("rating", star, { shouldValidate: true })}
+                  className="cursor-pointer transition"
+                  fill={isActive ? widgetConfig.starFillColor : "transparent"}
+                  color={isActive ? widgetConfig.starBodyColor : widgetConfig.emptyStarColor}
+                />
+              );
+            })}
+          </div>
 
           <div className="w-full flex flex-col items-start gap-2">
             <input
               type="text"
-              placeholder="Tu nombre"
+              placeholder={t(locale, "namePlaceholder")}
               className="border w-full rounded-lg px-3 py-2 outline-none focus:ring-2 input-tv"
               maxLength={100}
               disabled={isPending || isSuccess}
               {
-                ...register("name",{
-                  required: "Oye no te quedes sin el merito, necesitamos tu nombre!",
+                ...register("name", {
+                  required: t(locale, "nameRequired"),
                 })
               }
             />
@@ -173,14 +183,14 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
 
           <div className="w-full flex flex-col items-start gap-2">
             <textarea
-              placeholder="Escribe tu reseña..."
+              placeholder={t(locale, "reviewPlaceholder")}
               rows={4}
               className="border w-full rounded-lg px-3 py-2 outline-none focus:ring-2 resize-none input-tv"
-              maxLength={140}
+              maxLength={500}
               disabled={isPending || isSuccess}
               {
-                ...register("review",{
-                  required: "No olvides tu reseña!",
+                ...register("review", {
+                  required: t(locale, "reviewRequired"),
                 })
               }
             />
@@ -200,13 +210,11 @@ export const ReviewModal = ({ onClose, widgetConfig, productData }: ModalProps) 
             }}
             disabled={isPending || isSuccess}
           >
-            {
-              isPending ? (
-                <span>Enviando...</span>
-              ) : (
-                <span>Publicar reseña</span>
-              )
-            }
+            {isPending ? (
+              <span>{t(locale, "sending")}</span>
+            ) : (
+              <span>{t(locale, "submit")}</span>
+            )}
           </button>
         </form>
       </div>

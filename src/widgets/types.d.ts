@@ -46,25 +46,48 @@ type TextStyle = {
   underline: boolean;
 };
 
+type ReviewState = "pending" | "approved" | "rejected";
+
 type GridReviewsProps = {
   storeId: string;
   productId: string;
   productName?: string;
   productUrl?: string;
   productImg?: string;
-  widgetConfig: WidgetStyles
+  widgetConfig: WidgetStyles;
+  locale?: string;
 }
 
-type LastReviewsProps = { storeId: string, widgetConfig: WidgetStyles }
+type LastReviewsProps = {
+  storeId: string;
+  widgetConfig: WidgetStyles;
+  locale?: string;
+}
 
 type ProductRatingProps = {
   storeId: string;
   productId: string;
   widgetConfig: WidgetStyles;
+  locale?: string;
 }
 
 type ProductRatingCardProps = {
   storeId: string;
   productId: string;
   widgetConfig: WidgetStyles;
+  locale?: string;
+}
+
+type ReviewGraphProps = {
+  storeId: string;
+  productId: string;
+  widgetConfig: WidgetStyles;
+  locale?: string;
+}
+
+type ReviewSliderProps = {
+  storeId: string;
+  productId: string;
+  widgetConfig: WidgetStyles;
+  locale?: string;
 }

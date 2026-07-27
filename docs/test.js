@@ -3,10 +3,15 @@
   if (window.TrustviewLoaded) return;
   window.TrustviewLoaded = true;
 
-  console.log("Trustview loader iniciado v.2.3 🚀");
+  console.log("Trustview loader v.3.0");
 
   function getStoreId() {
-    return window.LS?.store?.id || null;
+    const id = window.LS?.store?.id;
+    return id != null ? String(id) : null;
+  }
+
+  function getLocale() {
+    return document.documentElement.lang || "es";
   }
 
   function getProductIdFromPDP() {
@@ -20,34 +25,34 @@
   function getProductNameFromPDP() {
     const nameElement = document.querySelector(".js-product-name");
     if (!nameElement) return null;
-  
+
     return nameElement.textContent?.trim() || null;
   }
 
   function getProductUrl() {
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical?.href) return canonical.href;
-  
+
     return window.location.href;
   }
 
   function getProductImg() {
     const firstSlide = document.querySelector(
       ".js-swiper-product .swiper-wrapper .js-product-slide a"
-    )
-  
-    if (!firstSlide) return null
-  
-    let imageUrl = firstSlide.getAttribute("href")
-  
-    if (!imageUrl) return null
-  
-    // Tienda Nube usa URLs sin protocolo (//)
+    );
+
+    if (!firstSlide) return null;
+
+    let imageUrl = firstSlide.getAttribute("href");
+
+    if (!imageUrl) return null;
+
+    // TiendaNube uses protocol-relative URLs (//)
     if (imageUrl.startsWith("//")) {
-      imageUrl = window.location.protocol + imageUrl
+      imageUrl = window.location.protocol + imageUrl;
     }
-  
-    return imageUrl
+
+    return imageUrl;
   }
 
   function getListingProducts() {
@@ -59,7 +64,7 @@
 
       return {
         productId: match[1],
-        element: node
+        element: node,
       };
     }).filter(Boolean);
   }
@@ -69,20 +74,26 @@
     const storeId = getStoreId();
 
     if (!storeId) {
-      console.warn("Trustview: No se pudo obtener LS.store.id");
+      console.warn("Trustview: Could not get store ID from LS.store.id");
       return;
     }
+
+    const locale = getLocale();
 
     const script = document.createElement("script");
     script.src = "https://trust-view-widget.vercel.app/trustview-widget.bundle.js";
     script.async = true;
+
+    script.onerror = function () {
+      console.error("Trustview: Failed to load widget bundle.");
+    };
 
     script.onload = function () {
 
       const Trustview = window.Trustview;
       if (!Trustview) return;
 
-      // 🔹 PDP
+      // PDP
       const productId = getProductIdFromPDP();
       if (productId) {
 
@@ -90,14 +101,16 @@
         const productUrl = getProductUrl();
         const productImg = getProductImg();
 
-        Trustview.mountGridReviews({ storeId, productId,productName,productUrl,productImg });
-        Trustview.mountProductRating({ storeId, productId });
+        Trustview.mountGridReviews({ storeId, productId, productName, productUrl, productImg, locale });
+        Trustview.mountProductRating({ storeId, productId, locale });
+        Trustview.mountReviewGraph({ storeId, productId, locale });
+        Trustview.mountReviewSlider({ storeId, productId, locale });
       }
 
-      // 🔹 Last Reviews (home/global)
-      Trustview.mountLastReviews({ storeId });
+      // Last Reviews (home/global)
+      Trustview.mountLastReviews({ storeId, locale });
 
-      // 🔹 Listados
+      // Product listing cards
       function mountListing() {
         getListingProducts().forEach(item => {
 
@@ -107,7 +120,8 @@
           Trustview.mountProductRatingCard({
             storeId,
             productId: item.productId,
-            target: item.element
+            target: item.element,
+            locale,
           });
         });
       }
@@ -117,9 +131,8 @@
       const observer = new MutationObserver(mountListing);
       observer.observe(document.body, {
         childList: true,
-        subtree: true
+        subtree: true,
       });
-
     };
 
     document.head.appendChild(script);

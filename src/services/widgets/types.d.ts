@@ -1,6 +1,8 @@
 type GetProductReviewsPayload = {
-  storeId: string;
-  productId: string;
+  store_external_id: string;
+  product_external_id: string;
+  page?: number;
+  limit?: number;
 }
 
 type GetProductReviewsResponse = {
@@ -10,8 +12,8 @@ type GetProductReviewsResponse = {
 }
 
 type GetProductRatingPayload = {
-  storeId: string,
-  productId: string,
+  store_external_id: string;
+  product_external_id: string;
 }
 
 type GetProductRatingResponse = {
@@ -23,7 +25,9 @@ type GetProductRatingResponse = {
 }
 
 type GetLastReviewsPayload = {
-  storeId: string;
+  store_external_id: string;
+  page?: number;
+  limit?: number;
 }
 
 type GetLastReviewsResponse = {
@@ -33,20 +37,21 @@ type GetLastReviewsResponse = {
 }
 
 type GetConfigPayload = {
-  storeId: string; 
+  store_external_id: string;
 }
 
 type GetConfigResponse = {
   success: boolean,
   data: {
-    widgetConfig: WidgetStyles;
+    widget_config: object;
+    widget_styles: WidgetStyles;
   },
   meta: undefined
 }
 
 type NewReviewPayload = {
   store_external_id: string;
-  product_external_id: string; 
+  product_external_id: string;
   product_name?: string | null;
   product_url: string;
   product_img: string;
@@ -56,7 +61,7 @@ type NewReviewPayload = {
 };
 
 type NewReviewResponse = {
-	success: boolean;
-	data: Review;
-	meta: null;
+  success: boolean;
+  data: Review;
+  meta: null;
 };

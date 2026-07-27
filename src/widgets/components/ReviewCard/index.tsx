@@ -1,22 +1,22 @@
-
 import React from "react";
-
-
 import { StarsRating } from "../StarsRating";
-import formatDate from "../../../utils/formatDate";
+import { formatDate } from "../../../utils/formatDate";
 import { merge } from "../../../utils/mergeStyles";
 import { getTextStyleClasses } from "../../../utils/getTextStyleClasses";
+import { t } from "../../../i18n/translations";
 
 type ReviewCardWidgetProps = {
   review: Review;
   config: WidgetStyles;
   showProduct?: boolean;
+  locale?: string;
 };
 
 export const ReviewCardWidget = ({
   review,
   config,
   showProduct = true,
+  locale = "es",
 }: ReviewCardWidgetProps): React.ReactElement => {
 
   const borderRadius = {
@@ -34,7 +34,7 @@ export const ReviewCardWidget = ({
       )}
       style={{ backgroundColor: config.background }}
     >
-      
+
       <div className="flex items-center gap-4">
         <div
           className="flex items-center justify-center h-12 w-12 rounded-full text-white font-semibold"
@@ -42,20 +42,20 @@ export const ReviewCardWidget = ({
             background: config.avatarGradient
               ? `linear-gradient(135deg, ${config.avatarBackground}, ${config.avatarContrastColor})`
               : config.avatarBackground,
-            color: config.avatarTextColor
+            color: config.avatarTextColor,
           }}
         >
           {review.author.charAt(0).toUpperCase()}
         </div>
 
         <div className="flex flex-col">
-        <h4
-          className={merge(
-            "text-lg",
-            getTextStyleClasses(config.titleStyle)
-          )}
-          style={{ color: config.titleColor }}
-        >
+          <h4
+            className={merge(
+              "text-lg",
+              getTextStyleClasses(config.titleStyle)
+            )}
+            style={{ color: config.titleColor }}
+          >
             {review.author}
           </h4>
 
@@ -63,7 +63,7 @@ export const ReviewCardWidget = ({
             className="text-sm"
             style={{ color: config.dateColor }}
           >
-            {formatDate(review.date)}
+            {formatDate(review.date, locale)}
           </span>
         </div>
       </div>
@@ -89,27 +89,22 @@ export const ReviewCardWidget = ({
         </p>
       </div>
 
-      {
-        showProduct && (
-          <div className="border-t pt-4">
-            <p className="text-sm text-gray-500">
-              <span className="font-medium">Producto: </span>
-              {
-                review.productUrl ? (
-                  <a href={review.productUrl} style={{ color: config.productColor }}>
-                    {review.product}
-                  </a>
-                ) : (
-                  <span style={{ color: config.productColor }}>
-                    {review.product}
-                  </span>
-                )
-              }
-            </p>
-          </div>
-        )
-      }
-
+      {showProduct && (
+        <div className="border-t pt-4">
+          <p className="text-sm text-gray-500">
+            <span className="font-medium">{t(locale, "product")}: </span>
+            {review.productUrl ? (
+              <a href={review.productUrl} style={{ color: config.productColor }}>
+                {review.product}
+              </a>
+            ) : (
+              <span style={{ color: config.productColor }}>
+                {review.product}
+              </span>
+            )}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

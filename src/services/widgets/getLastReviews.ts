@@ -1,10 +1,9 @@
 import { widgetRequester } from "../widgetRequester";
 
-export async function getLastReviews(payload:GetLastReviewsPayload): Promise<GetLastReviewsResponse> {
-
+export async function getLastReviews(payload: GetLastReviewsPayload): Promise<GetLastReviewsResponse> {
   return widgetRequester({
-    method: "POST",
+    method: "GET",
     endpoint: "/widget/lastreviews",
-    payload,
+    params: payload,
   });
 }
