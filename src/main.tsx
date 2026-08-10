@@ -9,6 +9,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./services/queryClient";
 import styles from "./styles/index.css?inline";
 import { useGetConfig } from "./hooks/config/useGetConfig";
+import { defaultWidgetStyles } from "./content/defaultConfig";
 
 // eslint-disable-next-line react-refresh/only-export-components, @typescript-eslint/no-explicit-any
 function WidgetBootstrap({ Component, props }: { Component: React.ComponentType<any>; props: any }) {
@@ -72,7 +73,8 @@ function WidgetBootstrap({ Component, props }: { Component: React.ComponentType<
     );
   }
 
-  const widgetConfig = data.data.widget_styles;
+  // Use widget_styles from API, fall back to defaults if null (new store without config)
+  const widgetConfig = data.data.widget_styles ?? defaultWidgetStyles;
 
   return <Component {...props} widgetConfig={widgetConfig} />;
 }

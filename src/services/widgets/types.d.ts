@@ -43,8 +43,8 @@ type GetConfigPayload = {
 type GetConfigResponse = {
   success: boolean,
   data: {
-    widget_config: object;
-    widget_styles: WidgetStyles;
+    widget_config: object | null;
+    widget_styles: WidgetStyles | null;
   },
   meta: undefined
 }
