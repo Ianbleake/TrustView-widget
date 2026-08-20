@@ -13,9 +13,8 @@ RUN npm ci
 COPY . .
 
 # Build-time env: widget API base URL.
-# Pass with: docker build --build-arg VITE_WIDGET_API=https://api.example.com .
-# Defaults to a placeholder so the build never fails on missing arg.
-ARG VITE_WIDGET_API
+# Override with: docker build --build-arg VITE_WIDGET_API=https://api.example.com .
+ARG VITE_WIDGET_API=https://trustview-api.noctis.lat/api/v1
 ENV VITE_WIDGET_API=${VITE_WIDGET_API}
 
 # Build the widget bundle (tsc -b && vite build) → output in dist/
