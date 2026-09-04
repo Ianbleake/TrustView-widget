@@ -1,0 +1,9 @@
+# TV-QA-017 — merge ownership under Noctis.
+#
+# At least TWO approvers per repository, deliberately. A single-approver setup
+# is what stalled `fix/dependabot-config` for five months and froze the whole
+# security backlog behind one person's availability.
+#
+# Either owner may approve and merge. Neither is a bottleneck for the other.
+
+* @Raylynd6299 @Ianbleake
