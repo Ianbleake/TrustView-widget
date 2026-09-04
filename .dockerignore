@@ -1,0 +1,45 @@
+# TV-OPS-001 — keep the build context minimal and secret-free.
+#
+# The Dockerfile does `COPY . .`. Without this file the whole repository —
+# including `.git` and any developer's local `.env` — is copied into the
+# builder layer and persists in the image.
+#
+# DO NOT exclude `nginx.conf` or `docker-entrypoint.sh`: the runner stage
+# copies both directly from the build context, not from the builder stage.
+# Excluding them breaks the image.
+
+# Version control — carries full history, including purged secrets
+.git
+.gitignore
+
+# Dependencies and build output (reinstalled/rebuilt inside the image)
+node_modules
+dist
+
+# Committed incremental-build state (TV-OPS-016) — causes stale builds
+*.tsbuildinfo
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Documentation and internal notes — not needed to build.
+# NOTE: `docs/test.js` is the production storefront loader, not a test
+# (TV-DOC-004). It is served separately and is not part of this image.
+docs
+*.md
+
+# CI, tooling and editor config — not needed to build
+.github
+.vscode
+.idea
+eslint.config.js
+
+# Docker's own files
+Dockerfile
+.dockerignore
+
+# Test and coverage output (once TV-QA-002 lands)
+coverage
+*.log
